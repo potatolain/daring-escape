@@ -21,7 +21,7 @@ This has the main loop for the game, which is then used to call out to other cod
 #include "source/sprites/sprite_definitions.h"
 #include "source/menus/input_helpers.h"
 #include "source/menus/game_over.h"
-
+#include "source/map/corruptor.h"
 
 // Method to set a bunch of variables to default values when the system starts up.
 // Note that if variables aren't set in this method, they will start at 0 on NES startup.
@@ -37,6 +37,8 @@ void initialize_variables() {
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
 
     currentWorldId = WORLD_OVERWORLD; // The ID of the world to load.
+
+    corruptionLevel = 0;
     
     // Little bit of generic initialization below this point - we need to set
     // The system up to use a different hardware bank for sprites vs backgrounds.
@@ -90,10 +92,17 @@ void main() {
             case GAME_STATE_RUNNING:
                 // TODO: Might be nice to have this only called when we have something to update, and maybe only update the piece we 
                 // care about. (For example, if you get a key, update the key count; not everything!
-                banked_call(PRG_BANK_HUD, update_hud);
                 banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
                 banked_call(PRG_BANK_PLAYER_SPRITE, handle_player_movement);
                 banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
+
+                // Both of these trigger graphics updates; let them trade off on who does what
+                if (frameCount & 0x01) {
+                    banked_call(PRG_BANK_CORRUPTOR, test_and_do_corruption);
+                } else {
+                    banked_call(PRG_BANK_HUD, update_hud);
+                }
+
                 break;
             case GAME_STATE_SCREEN_SCROLL:
                 // Hide all non-player sprites in play, so we have an empty screen to add new ones to
