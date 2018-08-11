@@ -49,6 +49,7 @@ ZEROPAGE_EXTERN(int, tempInt5);
 ZEROPAGE_EXTERN(int, tempInt6);
 
 ZEROPAGE_EXTERN(unsigned int, corruptionLevel);
+ZEROPAGE_EXTERN(unsigned char, worldNum);
 
 extern const unsigned int bitToByte[8];
 

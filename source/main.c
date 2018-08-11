@@ -27,7 +27,7 @@ This has the main loop for the game, which is then used to call out to other cod
 // Note that if variables aren't set in this method, they will start at 0 on NES startup.
 void initialize_variables() {
 
-    playerOverworldPosition = 0; // Which tile on the overworld to start with; 0-62
+    playerOverworldPosition = 8; // Which tile on the overworld to start with; 0-62
     playerHealth = 5; // Player's starting health - how many hearts to show on the HUD.
     playerMaxHealth = 5; // Player's max health - how many hearts to let the player collect before it doesn't count.
     playerXPosition = (128 << PLAYER_POSITION_SHIFT); // X position on the screen to start (increasing numbers as you go left to right. Just change the number)
@@ -39,6 +39,7 @@ void initialize_variables() {
     currentWorldId = WORLD_OVERWORLD; // The ID of the world to load.
 
     corruptionLevel = 0;
+    worldNum = 0;
     
     // Little bit of generic initialization below this point - we need to set
     // The system up to use a different hardware bank for sprites vs backgrounds.
@@ -83,7 +84,7 @@ void main() {
                 fade_out();
 
 
-                playerOverworldPosition = 0; // Which tile on the overworld to start with; 0-62
+                playerOverworldPosition = (worldNum & 0x01 ? 40 : 8); // Which tile on the overworld to start with; 0-62
                 playerXPosition = (128 << PLAYER_POSITION_SHIFT); // X position on the screen to start (increasing numbers as you go left to right. Just change the number)
                 playerYPosition = (128 << PLAYER_POSITION_SHIFT); // Y position on the screen to start (increasing numbers as you go top to bottom. Just change the number)
                 playerDirection = SPRITE_DIRECTION_DOWN; // What direction to have the player face to start.
@@ -91,6 +92,7 @@ void main() {
                 lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
 
                 corruptionLevel = 0;
+                currentWorldId = (worldNum >> 1) + PRG_BANK_MAP_OVERWORLD;
 
                 for (i = 0; i != 64; ++i) {
                     currentMapSpritePersistance[i] = 0;
@@ -145,6 +147,10 @@ void main() {
             case GAME_STATE_SHOWING_TEXT:
                 banked_call(PRG_BANK_GAME_TEXT, draw_game_text);
                 gameState = GAME_STATE_RUNNING;
+                break;
+            case GAME_STATE_LEVEL_COMPLETE:
+                banked_call(PRG_BANK_GAME_TEXT, draw_game_text);
+                gameState = GAME_STATE_RESET_LEVEL;
                 break;
             case GAME_STATE_PAUSED:
                 fade_out();

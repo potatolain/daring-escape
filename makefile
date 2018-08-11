@@ -116,6 +116,45 @@ temp/%.s: temp/%.c
 temp/level_overworld.c: levels/overworld.tmx
 	$(TMX2C) 3 overworld $< $(patsubst %.c, %, $@)
 
+# That was the sound of me throwing up in my mouth a little. Sorry about that, I'll try to stifle it in the future
+# OK I FAILED LBKAJHSDBHASLKGHJASDLBADFJLbaslaskjddsafasfsad
+# This is the easiest/lowest effort way I could come up with to create a good number of levels. It's ugly as sin, and
+# would have gotten me insta-fired if suggested in 1988, but it works here...
+temp/level_overworld2.c: levels/overworld2.tmx
+	$(TMX2C) 4 overworld2 $< $(patsubst %.c, %, $@)
+
+temp/level_overworld3.c: levels/overworld3.tmx
+	$(TMX2C) 5 overworld3 $< $(patsubst %.c, %, $@)
+
+temp/level_overworld4.c: levels/overworld4.tmx
+	$(TMX2C) 6 overworld4 $< $(patsubst %.c, %, $@)
+
+temp/level_overworld5.c: levels/overworld5.tmx
+	$(TMX2C) 7 overworld5 $< $(patsubst %.c, %, $@)
+
+temp/level_overworld6.c: levels/overworld6.tmx
+	$(TMX2C) 8 overworld6 $< $(patsubst %.c, %, $@)
+
+temp/level_overworld7.c: levels/overworld7.tmx
+	$(TMX2C) 9 overworld7 $< $(patsubst %.c, %, $@)
+
+temp/level_overworld8.c: levels/overworld8.tmx
+	$(TMX2C) A overworld8 $< $(patsubst %.c, %, $@)
+
+temp/level_overworld9.c: levels/overworld9.tmx
+	$(TMX2C) B overworld9 $< $(patsubst %.c, %, $@)
+
+temp/level_overworld10.c: levels/overworld10.tmx
+	$(TMX2C) C overworld10 $< $(patsubst %.c, %, $@)
+
+temp/level_overworld11.c: levels/overworld11.tmx
+	$(TMX2C) D overworld11 $< $(patsubst %.c, %, $@)
+
+temp/level_overworld12.c: levels/overworld12.tmx
+	$(TMX2C) E overworld12 $< $(patsubst %.c, %, $@)
+
+
+
 graphics/generated/tiles.png: graphics/tiles.chr graphics/sprites.chr graphics/palettes/main_bg.pal
 	$(CHR2IMG) graphics/tiles.chr graphics/palettes/main_bg.pal graphics/generated/tiles.png
 

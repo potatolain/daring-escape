@@ -50,6 +50,10 @@ const unsigned char* movedText =
                                 "Hey, you put me on another    "
                                 "screen! Cool!";
 
+const unsigned char* leveCompleteText = 
+                                "Barney moved on to a new      "
+                                "dimension...";
+
 // NOTE: This uses tempChar1 through tempChar3; the caller must not use these.
 void update_player_sprite() {
     // Calculate the position of the player itself, then use these variables to build it up with 4 8x8 NES sprites.
@@ -397,6 +401,11 @@ void handle_player_sprite_collision() {
                 break;
             case SPRITE_TYPE_ENDGAME:
                 gameState = GAME_STATE_CREDITS;
+                break;
+            case SPRITE_TYPE_END_MAP:
+                ++worldNum;
+                trigger_game_text(leveCompleteText);
+                gameState = GAME_STATE_LEVEL_COMPLETE;
                 break;
             case SPRITE_TYPE_NPC:
                 // Okay, we collided with this NPC before we calculated the player's movement. After being moved, does the 

@@ -39,7 +39,9 @@ ZEROPAGE_DEF(int, tempInt4);
 ZEROPAGE_DEF(int, tempInt5);
 ZEROPAGE_DEF(int, tempInt6);
 
-ZEROPAGE_DEF(unsigned int, corruptionLevel)
+ZEROPAGE_DEF(unsigned int, corruptionLevel);
+
+ZEROPAGE_DEF(unsigned char, worldNum);
 
 
 // This can be used to convert a byte value to a bit id - just get the 
