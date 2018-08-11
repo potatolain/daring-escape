@@ -11,7 +11,7 @@ void wait_for_start() {
         controllerState = pad_poll(0);
 
         // If Start is pressed now, and was not pressed before...
-        if (controllerState & PAD_START && !(lastControllerState & PAD_START)) {
+        if (controllerState & (PAD_START|PAD_A) && !(lastControllerState & (PAD_START|PAD_A))) {
             break;
         }
 

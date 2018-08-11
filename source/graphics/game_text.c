@@ -136,7 +136,7 @@ void draw_game_text() {
         }
 
         // Each time we loop, check if A has been pressed. Set this variable if it is.
-        if (pad_trigger(0) & PAD_A) {
+        if ((pad_trigger(0) & PAD_A) || (gameState == GAME_STATE_LEVEL_COMPLETE && pad_state(0) & PAD_START)) {
             hasInput = TRUE;
         }
 
