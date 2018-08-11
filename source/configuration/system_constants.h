@@ -60,6 +60,9 @@
 #define SFX_GAMEOVER 4
 #define SFX_WIN 5
 
+// FIXME
+#define SFX_VACUUM 3
+
 // Constants for sfx channels. Completely unnecessary but it's easier to read
 #define SFX_CHANNEL_1 0
 #define SFX_CHANNEL_2 1

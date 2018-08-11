@@ -35,11 +35,13 @@ void initialize_variables() {
     playerDirection = SPRITE_DIRECTION_DOWN; // What direction to have the player face to start.
 
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
+    playerKeyCount = 0;
 
     currentWorldId = WORLD_OVERWORLD; // The ID of the world to load.
 
     corruptionLevel = 0;
     worldNum = 0;
+    playerVacuumCount = 0;
     
     // Little bit of generic initialization below this point - we need to set
     // The system up to use a different hardware bank for sprites vs backgrounds.
@@ -82,6 +84,7 @@ void main() {
             case GAME_STATE_RESET_LEVEL:
                 music_stop();
                 fade_out();
+                oam_clear();
 
 
                 playerOverworldPosition = (worldNum & 0x01 ? 40 : 8); // Which tile on the overworld to start with; 0-62
@@ -93,10 +96,6 @@ void main() {
 
                 corruptionLevel = 0;
                 currentWorldId = (worldNum >> 1) + PRG_BANK_MAP_OVERWORLD;
-
-                for (i = 0; i != 64; ++i) {
-                    currentMapSpritePersistance[i] = 0;
-                } 
 
                 load_map();
 
@@ -150,6 +149,13 @@ void main() {
                 break;
             case GAME_STATE_LEVEL_COMPLETE:
                 banked_call(PRG_BANK_GAME_TEXT, draw_game_text);
+
+                // Reset state once per level; if you die, you can't get your items back, etc...
+                // This also means vacuum parts are kept. Neat.
+                for (i = 0; i != 64; ++i) {
+                    currentMapSpritePersistance[i] = 0;
+                } 
+
                 gameState = GAME_STATE_RESET_LEVEL;
                 break;
             case GAME_STATE_PAUSED:

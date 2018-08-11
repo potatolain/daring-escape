@@ -40,12 +40,96 @@ ZEROPAGE_DEF(unsigned char, playerDirection);
 
  const unsigned char* introductionText = 
                                 "Welcome to nes-starter-kit! I " 
+                                ;/*
                                 "am an NPC.                    "
                                 "                              "
 
                                 "Hope you're having fun!       "
                                 "                              "
-                                "- Chris";
+                                "- Chris";*/
+const unsigned char* introCharacter = 
+                                "Hello! How are you?           "
+                                "                              "
+                                "                              "
+                                
+                                "... wait, why are you not     "
+                                "running!? The world is ending!"
+                                "                              "
+                                
+                                "The world is being swallowed  "
+                                "up by some unknown power.     "
+                                "                              "
+
+                                "We are running out of space to"
+                                "live! There must be an escape!"
+                                "                              "
+
+                                "Me? I can't run anymore. It's "
+                                "ok. I lived a good life...    "
+                                "                              "
+
+                                "GO! While you still can!";
+const unsigned char* level2Character = 
+                                "It never ends! I've been      "
+                                "running from the darkness for "
+                                "days! I have gone through     "
+
+                                "twenty dimensions, and there  "
+                                "is just no end in sight!      "
+                                "                              "
+
+                                "I can't run anymore. Hopefully"
+                                "the darkness takes the pain in"
+                                "my legs away...";
+
+const unsigned char* heartCharacter = 
+                                "The thing next me is a        "
+                                "health powerup. It restores   "
+                                "some of your health. Grab it!";
+
+const unsigned char* keyCharacter = 
+                                "Grab the key south of here!   "
+                                "                              "
+                                "You just might need it...";
+
+const unsigned char* vacuumCharacter = 
+                                "The weird thing next to me is "
+                                "part of a vacuum stabilizing  "
+                                "machine.                      "
+                                
+                                "If we could put it together,  "
+                                "we might be able to reverse   "
+                                "everything happening...       "
+                                
+                                "Sadly this is the only part I "
+                                "know of, and it takes many    "
+                                "to fix the smallest tear.     "
+                                
+                                "If you're still running, you  "
+                                "should collect these.         "
+                                "                              "
+                                "Maybe someone can use them,   "
+                                "and fix this mess!";
+
+const unsigned char* firstEnemyCharacter = 
+                                "Some creatures have gone      "
+                                "completely insane after seeing"
+                                "the world shrink...           "
+
+                                "They will try to hurt you; you"
+                                "must avoid them to survive!   "
+                                "                              "
+                                
+                                "For whatever reason they do   "
+                                "not mind me, but I have seen  "
+                                "many travellers perist.       "
+
+                                "Be careful!";
+
+const unsigned char* runCharacter = 
+
+                                "RUN!!!!";
+
 const unsigned char* movedText = 
                                 "Hey, you put me on another    "
                                 "screen! Cool!";
@@ -314,6 +398,15 @@ void handle_player_sprite_collision() {
                     currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
                 }
                 break;
+            case SPRITE_TYPE_VACUUM_PART:
+                ++playerVacuumCount;
+                currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+
+                sfx_play(SFX_VACUUM, SFX_CHANNEL_2);
+
+                // Mark the sprite as collected, so we can't get it again.
+                currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
+                break;
             case SPRITE_TYPE_KEY:
                 if (playerKeyCount < MAX_KEY_COUNT) {
                     playerKeyCount++;
@@ -426,15 +519,33 @@ void handle_player_sprite_collision() {
                     playerYPosition -= playerYVelocity;
                     playerControlsLockTime = 0;
                 }
-
+                
                 if (controllerState & PAD_A && !(lastControllerState & PAD_A)) {
                     // Show the text for the player on the first screen
+                    
+                    if (worldNum == 0 && playerOverworldPosition == 8) {
+                        trigger_game_text(introCharacter);
+                    } else if (worldNum == 0 && playerOverworldPosition == 9) {
+                        trigger_game_text(heartCharacter);
+                    } else if (worldNum == 1 && playerOverworldPosition == 40) {
+                        trigger_game_text(level2Character);
+                    } else if (worldNum == 1 && playerOverworldPosition == 41) {
+                        trigger_game_text(firstEnemyCharacter);
+                    } else if (worldNum == 2 && playerOverworldPosition == 8) {
+                        trigger_game_text(runCharacter);
+                    } else if (worldNum == 2) {
+                        trigger_game_text(vacuumCharacter);
+                    } else if (worldNum == 3) {
+                        trigger_game_text(keyCharacter);
+                    }
+                    /*
                     if (playerOverworldPosition == 0) {
                         trigger_game_text(introductionText);
                     } else {
                         // If it's on another screen, show some different text :)
                         trigger_game_text(movedText);
                     }
+                    */
                 }
                 break;
 
