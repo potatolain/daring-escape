@@ -1,3 +1,7 @@
 #define PRG_BANK_CORRUPTOR 2
 
-void test_and_do_corruption(void);
+#define CORRUPTION_SPEED 2
+
+void corrupt_current_map();
+
+void test_and_do_corruption();

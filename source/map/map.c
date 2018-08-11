@@ -195,6 +195,7 @@ void draw_current_map_to_nametable(int nametableAdr, int attributeTableAdr, unsi
          // The top 2 bytes of map data are palette data. Skip that for now.
          
         currentValue = currentMap[i] & 0x3f;
+        // This bumps the tile id up from the id for a 16x16 tile to an 8x8 tile on the real map
         currentValue = (((currentValue & 0xf8)) << 2) + ((currentValue & 0x07) << 1);
 
         if (bufferIndex == 0) {

@@ -3,6 +3,7 @@
 #include "source/library/bank_helpers.h"
 #include "source/map/map.h"
 #include "source/globals.h"
+#include "source/map/corruptor.h"
 
 // Loads the map at the player's current position into the ram variable given. 
 // Kept in a separate file, as this must remain in the primary bank so it can
@@ -14,4 +15,5 @@ void load_map() {
     memcpy(currentMap, overworld + (playerOverworldPosition << 8), 256);
     bank_pop();
 
+    banked_call(PRG_BANK_CORRUPTOR, corrupt_current_map);
 }

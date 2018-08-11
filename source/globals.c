@@ -14,7 +14,7 @@ ZEROPAGE_DEF(unsigned char, playerMaxHealth);
 ZEROPAGE_DEF(unsigned char, gameState);
 ZEROPAGE_DEF(unsigned char, currentWorldId);
 
-ZEROPAGE_ARRAY_DEF(unsigned char, screenBuffer, 0x20);
+ZEROPAGE_ARRAY_DEF(unsigned char, screenBuffer, 0x40);
 
 ZEROPAGE_DEF(unsigned char, everyOtherCycle);
 

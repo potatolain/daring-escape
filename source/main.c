@@ -43,7 +43,13 @@ void initialize_variables() {
     // Little bit of generic initialization below this point - we need to set
     // The system up to use a different hardware bank for sprites vs backgrounds.
     bank_spr(1);
-}   
+}
+
+void clear_screen_buffer() {
+    for (i = 0; i != 64; ++i) {
+        screenBuffer[i] = NT_UPD_EOF;
+    }
+}
 
 void main() {
     fade_out_instant();
@@ -92,16 +98,18 @@ void main() {
             case GAME_STATE_RUNNING:
                 // TODO: Might be nice to have this only called when we have something to update, and maybe only update the piece we 
                 // care about. (For example, if you get a key, update the key count; not everything!
-                banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
-                banked_call(PRG_BANK_PLAYER_SPRITE, handle_player_movement);
-                banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
-
                 // Both of these trigger graphics updates; let them trade off on who does what
+                // Bumped to beginning to avoid weird-ass corruption artifacts from trying to update corruptions after setting GAME_STATE_SCREEN_TRANSITION
                 if (frameCount & 0x01) {
                     banked_call(PRG_BANK_CORRUPTOR, test_and_do_corruption);
                 } else {
                     banked_call(PRG_BANK_HUD, update_hud);
                 }
+
+                banked_call(PRG_BANK_MAP_SPRITES, update_map_sprites);
+                banked_call(PRG_BANK_PLAYER_SPRITE, handle_player_movement);
+                banked_call(PRG_BANK_PLAYER_SPRITE, update_player_sprite);
+
 
                 break;
             case GAME_STATE_SCREEN_SCROLL:
@@ -109,6 +117,9 @@ void main() {
                 oam_hide_rest(FIRST_ENEMY_SPRITE_OAM_INDEX);
 
                 // If you don't like the screen scrolling transition, you can replace the transition with `do_fade_screen_transition`
+                set_vram_update(NULL);
+                clear_screen_buffer();
+                ppu_wait_nmi();
                 banked_call(PRG_BANK_MAP_LOGIC, do_scroll_screen_transition);
                 break;
             case GAME_STATE_SHOWING_TEXT:

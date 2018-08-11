@@ -10,5 +10,8 @@ unsigned char test_collision(unsigned char tileId, unsigned char isPlayer) {
     if (collisionTemp >= FIRST_SOLID_SPRITE && collisionTemp <= LAST_SOLID_SPRITE) {
         return 1;
     }
+    if (collisionTemp == 57) {
+        return 1;
+    }
     return 0;
 }
