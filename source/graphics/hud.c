@@ -44,10 +44,18 @@ void update_hud() {
     // Next, draw the key count, using the key tile, and our key count variable
     screenBuffer[i++] = MSB(NAMETABLE_A + HUD_KEY_START) | NT_UPD_HORZ;
     screenBuffer[i++] = LSB(NAMETABLE_A + HUD_KEY_START);
-    screenBuffer[i++] = 2;
+    screenBuffer[i++] = 3;
     screenBuffer[i++] = HUD_TILE_KEY;
+    screenBuffer[i++] = HUD_TILE_NUMBER;
     screenBuffer[i++] = HUD_TILE_NUMBER + playerKeyCount;
 
+    // Next, draw the key count, using the key tile, and our key count variable
+    screenBuffer[i++] = MSB(NAMETABLE_A + HUD_KEY_START) | NT_UPD_HORZ;
+    screenBuffer[i++] = LSB(NAMETABLE_A + HUD_VACUUM_START);
+    screenBuffer[i++] = 3;
+    screenBuffer[i++] = HUD_TILE_VACUUM;
+    screenBuffer[i++] = HUD_TILE_NUMBER + (playerVacuumCount / 10);
+    screenBuffer[i++] = HUD_TILE_NUMBER + (playerVacuumCount % 10);
 
     screenBuffer[i++] = NT_UPD_EOF;
     set_vram_update(screenBuffer);

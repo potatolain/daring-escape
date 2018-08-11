@@ -134,7 +134,7 @@ void test_and_do_corruption() {
         }
 
         // Jank player sprite out of existance if needed
-        if (playerXPosition >> PLAYER_POSITION_SHIFT < ((corruptionPosition+1)<<4)) {
+        if ((playerXPosition+PLAYER_WIDTH_EXTENDED + 35) >> PLAYER_POSITION_SHIFT < ((corruptionPosition+1)<<4)+1) {
             sfx_play(SFX_HURT, SFX_CHANNEL_1);
             if (--playerHealth == 0) {
                 gameState = GAME_STATE_GAME_OVER;
@@ -145,7 +145,6 @@ void test_and_do_corruption() {
 
     }
 
-    // TODO: Test players and sprites at the end of this mess
     set_vram_update(screenBuffer);
 
 }
