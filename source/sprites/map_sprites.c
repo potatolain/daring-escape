@@ -8,6 +8,7 @@
 #include "source/library/bank_helpers.h"
 #include "source/menus/error.h"
 #include "source/sprites/collision.h"
+#include "source/map/corruptor.h"
 
 CODE_BANK(PRG_BANK_MAP_SPRITES);
 
@@ -19,6 +20,7 @@ CODE_BANK(PRG_BANK_MAP_SPRITES);
 #define currentSpriteData tempChar6
 #define sprX8 tempChar7
 #define sprY8 tempChar8
+#define corruptionLocation tempChar9
 #define sprX tempInt1
 #define sprY tempInt2
 // NOTE: width = height for our examples, so both are set to the same value.
@@ -39,6 +41,7 @@ void do_sprite_movement_with_collision();
 // Updates all available map sprites (with movement every other frame)
 void update_map_sprites() {
     lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
+    corruptionLocation = get_corruption_position();
     
     // To save some cpu time, we only update sprites every other frame - even sprites on even frames, odd sprites on odd frames.
     for (i = 0; i < MAP_MAX_SPRITES; ++i) {
@@ -123,7 +126,6 @@ void update_map_sprites() {
         // We only want to do movement once every other frame, to save some cpu time. 
         // So, split this to update even sprites on even frames, odd sprites on odd frames
         if ((i & 0x01) == everyOtherCycle) {
-
             switch (currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_MOVEMENT_TYPE]) {
                 case SPRITE_MOVEMENT_LEFT_RIGHT:
                     // Get the speed to travel at
@@ -219,7 +221,7 @@ void update_map_sprites() {
                                 break;
                         }
                         currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME] = 20 + (rand8() & 31);
-                    } else {
+                    } else {        
                         --currentMapSpriteData[currentMapSpriteIndex + MAP_SPRITE_DATA_POS_DIRECTION_TIME];
                     }
 
@@ -235,6 +237,16 @@ void update_map_sprites() {
         
         sprX8 = sprX >> SPRITE_POSITION_SHIFT;
         sprY8 = sprY >> SPRITE_POSITION_SHIFT;
+
+        if ((sprX8 >> 4)+1 < corruptionLocation) {
+            // baiiiiii
+            currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+            currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[i];
+            sfx_play(SFX_EXPLODE, SFX_CHANNEL_4);
+
+        }
+
+
         if (currentSpriteSize == SPRITE_SIZE_8PX_8PX) {
             oam_spr(
                 sprX8 + (NES_SPRITE_WIDTH/2),

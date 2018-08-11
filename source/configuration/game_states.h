@@ -9,4 +9,6 @@
 #define GAME_STATE_PAUSED           100
 #define GAME_STATE_SCREEN_SCROLL    150
 #define GAME_STATE_GAME_OVER        201
+#define GAME_STATE_RESET_LEVEL      202
+#define GAME_STATE_EATEN            203
 #define GAME_STATE_CREDITS          250

@@ -57,7 +57,7 @@ void main() {
 
     while (1) {
         everyOtherCycle = !everyOtherCycle;
-        switch (gameState) {
+    switch (gameState) {
             case GAME_STATE_SYSTEM_INIT:
                 initialize_variables();
                 gameState = GAME_STATE_TITLE_DRAW;
@@ -73,9 +73,31 @@ void main() {
                 break;
             case GAME_STATE_POST_TITLE:
 
+                // Seed the random number generator here, using the time since console power on as a seed
+                set_rand(frameCount);
+                
+                gameState = GAME_STATE_RESET_LEVEL;
+                break;
+            case GAME_STATE_RESET_LEVEL:
                 music_stop();
                 fade_out();
+
+
+                playerOverworldPosition = 0; // Which tile on the overworld to start with; 0-62
+                playerXPosition = (128 << PLAYER_POSITION_SHIFT); // X position on the screen to start (increasing numbers as you go left to right. Just change the number)
+                playerYPosition = (128 << PLAYER_POSITION_SHIFT); // Y position on the screen to start (increasing numbers as you go top to bottom. Just change the number)
+                playerDirection = SPRITE_DIRECTION_DOWN; // What direction to have the player face to start.
+
+                lastPlayerSpriteCollisionId = NO_SPRITE_HIT;
+
+                corruptionLevel = 0;
+
+                for (i = 0; i != 64; ++i) {
+                    currentMapSpritePersistance[i] = 0;
+                } 
+
                 load_map();
+
 
                 banked_call(PRG_BANK_MAP_LOGIC, draw_current_map_to_a);
                 banked_call(PRG_BANK_MAP_LOGIC, init_map);
@@ -86,13 +108,11 @@ void main() {
                 banked_call(PRG_BANK_HUD, draw_hud);
                 ppu_on_all();
 
-                // Seed the random number generator here, using the time since console power on as a seed
-                set_rand(frameCount);
-                
                 // Map drawing is complete; let the player play the game!
                 music_play(SONG_OVERWORLD);
                 fade_in();
                 gameState = GAME_STATE_RUNNING;
+
                 break;
 
             case GAME_STATE_RUNNING:
@@ -145,6 +165,15 @@ void main() {
                 fade_in();
 
                 break;
+            case GAME_STATE_EATEN:
+                fade_out();
+                // Draw the "you lose" screen
+                banked_call(PRG_BANK_GAME_OVER, draw_reset_level);
+                fade_in();
+                banked_call(PRG_BANK_MENU_INPUT_HELPERS, wait_for_start);
+                gameState = GAME_STATE_RESET_LEVEL;
+                break;
+
             case GAME_STATE_GAME_OVER:
                 fade_out();
 

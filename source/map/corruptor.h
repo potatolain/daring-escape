@@ -5,3 +5,5 @@
 void corrupt_current_map();
 
 void test_and_do_corruption();
+
+unsigned char get_corruption_position();

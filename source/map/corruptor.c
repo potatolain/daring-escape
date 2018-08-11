@@ -3,6 +3,9 @@
 #include "source/globals.h"
 #include "source/map/map.h"
 #include "source/neslib_asm/neslib.h"
+#include "source/globals.h"
+#include "source/configuration/system_constants.h"
+#include "source/configuration/game_states.h"
 
 CODE_BANK(PRG_BANK_CORRUPTOR);
 
@@ -128,6 +131,16 @@ void test_and_do_corruption() {
             screenBuffer[30 + temp] = BOUFFANT;
             screenBuffer[31 + temp] = BOUFFANT;
             currentMap[(i<<4)+corruptionPosition] = 57;
+        }
+
+        // Jank player sprite out of existance if needed
+        if (playerXPosition >> PLAYER_POSITION_SHIFT < ((corruptionPosition+1)<<4)) {
+            sfx_play(SFX_HURT, SFX_CHANNEL_1);
+            if (--playerHealth == 0) {
+                gameState = GAME_STATE_GAME_OVER;
+            } else {
+                gameState = GAME_STATE_EATEN;
+            }
         }
 
     }
