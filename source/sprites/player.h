@@ -27,7 +27,7 @@
 // If the player is damaged, how long do we lock their controls such that they bounce backwards?
 #define PLAYER_DAMAGE_CONTROL_LOCK_TIME 20
 // If the player is damaged, how long are they immune to damage?
-#define PLAYER_DAMAGE_INVULNERABILITY_TIME 30
+#define PLAYER_DAMAGE_INVULNERABILITY_TIME 90
 // If the player is invulnerable, how quickly to we blink the sprite? In sprite mask form, so one of 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
 #define PLAYER_INVULNERABILITY_BLINK_MASK 0x02
 

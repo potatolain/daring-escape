@@ -5,6 +5,7 @@
         "/bin/bash"
     ],
     "files.associations": {
-        "bank_helpers.h": "c"
+        "bank_helpers.h": "c",
+        "input_helpers.h": "c"
     }
 }

@@ -72,7 +72,20 @@ void corrupt_current_map() {
 void test_and_do_corruption() {
 
     // TODO: item to slow corruption
-    corruptionLevel += CORRUPTION_SPEED;
+    if (worldNum < 5) {
+
+        corruptionLevel += CORRUPTION_SPEED;
+    } else if (worldNum == 12) {
+        // VROOM
+        corruptionLevel += 6;
+    } else if (worldNum == 13) {
+        // GO
+        corruptionLevel += 8;
+    } else if (worldNum == 14) {
+        // Do nothing at all :)
+    } else {
+        corruptionLevel += CORRUPTION_SPEED_FAST;
+    }
 
     corruptionPosition = get_corruption_position();
 

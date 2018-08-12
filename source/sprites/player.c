@@ -130,9 +130,100 @@ const unsigned char* runCharacter =
 
                                 "RUN!!!!";
 
+const unsigned char* fasterCharacter = 
+                                "The darkness seems to be      "
+                                "advancing even faster now. Get"
+                                "moving!";
+
+const unsigned char* labAheadCharacter = 
+                                "I've heard there is a lab full"
+                                "of scientists ahead. Rumor is "
+                                "they combine robots with forms"
+
+                                "of life.                      "
+                                "                              "
+                                "                              "
+
+                                "People also say that they have"
+                                "the ability to control space  "
+                                "and time.                     "
+                                
+                                "They might be able to stop    "
+                                "the oncoming darkness.        "
+                                "                              "
+
+                                "I also heard their creations  "
+                                "are violent. Be very careful!";
+
 const unsigned char* movedText = 
                                 "Hey, you put me on another    "
                                 "screen! Cool!";
+const unsigned char* labber =   "Our lab is ahead. GO!! RUN!   ";
+
+const unsigned char* allVacuums =
+                                "Oh my goodness, are you ok!?  "
+                                "No one has come through that  "
+                                "way in centuries.             "
+                                
+                                "That's where we put our       "
+                                "robots that went wrong.       "
+                                "Someone made a mistake many   "
+
+                                "years ago, and our docile     "
+                                "worker robots became extremely"
+                                "aggressive.                   "
+
+                                "The world you came through is "
+                                "disappearing, and you're      "
+                                "running out of space?         "
+
+                                "I can help with that. We had  "
+                                "that problem a few decades ago"
+                                "and found a way to stop it.   "
+
+                                "I see you have a dozen pieces "
+                                "of the vacuum stabilizing     "
+                                "machine.                      "
+                                
+                                "If you just give me those, I  "
+                                "will reverse the damage, and  "
+                                "you can head back home.       "
+
+                                "Just head through the door    "
+                                "below to get back to your own "
+                                "dimension.";
+const unsigned char* notAllVacuums = // are created equal??
+                                "Oh my goodness, are you ok!?  "
+                                "No one has come through that  "
+                                "way in centuries.             "
+                                
+                                "That's where we put our       "
+                                "robots that went wrong.       "
+                                "Someone made a mistake many   "
+
+                                "years ago, and our docile     "
+                                "worker robots became extremely"
+                                "aggressive.                   "
+
+                                "The world you came through is "
+                                "disappearing, and you're      "
+                                "running out of space?         "
+
+                                "Unfortunately, there is not   "
+                                "much I can do. We have dealt  "
+                                "with that before, but...      "
+
+                                "We need vacuum stabilizer     "
+                                "pieces to fix it, and there   "
+                                "are no more in this dimension."
+                                
+                                "You are welcome to stay here  "
+                                "with us. The door behind you  "
+                                "leads to our living area.     "
+
+                                "We have plenty of food and    "
+                                "space.                        "
+                                "I'm so sorry for your loss.";
 
 const unsigned char* leveCompleteText = 
                                 "Barney moved on to a new      "
@@ -541,6 +632,18 @@ void handle_player_sprite_collision() {
                         trigger_game_text(vacuumCharacter);
                     } else if (worldNum == 3) {
                         trigger_game_text(keyCharacter);
+                    } else if (worldNum == 5) {
+                        trigger_game_text(fasterCharacter);
+                    } else if (worldNum == 7) {
+                        trigger_game_text(labAheadCharacter);
+                    } else if (worldNum == 13) {
+                        trigger_game_text(labber);
+                    } else if (worldNum == 14) {
+                        if (playerVacuumCount >= ALL_VACUUMS) {
+                            trigger_game_text(allVacuums);
+                        } else {
+                            trigger_game_text(notAllVacuums);
+                        }
                     }
                     /*
                     if (playerOverworldPosition == 0) {

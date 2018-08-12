@@ -32,6 +32,8 @@
 
 	.export _split_y,_reset,_wait_for_sprite0_hit
 
+
+.importzp _worldNum
 ;NMI handler
 
 nmi:
@@ -128,6 +130,24 @@ nmi:
 @skipAll:
 
 	lda <PPU_MASK_VAR
+
+	; MEGA palette hack
+	pha
+	lda _worldNum
+	cmp #12
+	beq @doit
+	cmp #13
+	beq @doit
+	jmp @dontdoit
+	@doit:
+	pla
+	ora #%11100000
+	jmp @after
+	@dontdoit:
+	pla
+
+	@after:
+
 	sta PPU_MASK
 
 	inc <FRAME_CNT1

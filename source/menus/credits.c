@@ -12,6 +12,7 @@
 CODE_BANK(PRG_BANK_CREDITS_MENU);
 
 void draw_win_screen() {
+    set_vram_update(NULL);
     ppu_off();
     clear_screen();
     // We reuse the title palette here, though we have the option of making our own if needed.
@@ -85,6 +86,7 @@ void draw_credits_screen() {
     put_str(NTADR_A(4, 19), "- Who's Cuter Font");
     put_str(NTADR_A(4, 20), "- NES Space Checker");
     put_str(NTADR_A(4, 21), "- Mesen");
+    put_str(NTADR_A(4, 22), "- Surt's Sprite Generator");
 /*
     put_str(NTADR_A(2, 11), "Music");
     put_str(NTADR_A(4, 13), "Wolfgang (OpenGameArt)");

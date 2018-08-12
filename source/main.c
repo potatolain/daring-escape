@@ -40,7 +40,7 @@ void initialize_variables() {
     currentWorldId = WORLD_OVERWORLD; // The ID of the world to load.
 
     corruptionLevel = 0;
-    worldNum = 5;
+    worldNum = 0;
     playerVacuumCount = 0;
     
     // Little bit of generic initialization below this point - we need to set
@@ -111,7 +111,17 @@ void main() {
                 ppu_on_all();
 
                 // Map drawing is complete; let the player play the game!
-                music_play(SONG_OVERWORLD_1);
+                if (worldNum < 4) {
+                    music_play(SONG_OVERWORLD_1);
+                } else if (worldNum < 9) {
+                    music_play(SONG_OVERWORLD_2);
+                } else if (worldNum < 12) {
+                    music_play(SONG_OVERWORLD_CORRUPTED); 
+                } else if (worldNum < 14) {
+                    music_play(SONG_SCARY);
+                } else {
+                    music_stop();
+                }
                 fade_in();
                 gameState = GAME_STATE_RUNNING;
 

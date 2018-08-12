@@ -53,7 +53,7 @@
 #define SONG_OVERWORLD_1 5
 #define SONG_OVERWORLD_2 6
 #define SONG_OVERWORLD_CORRUPTED 7
-#define SONG_SCARY 10
+#define SONG_SCARY 9
 
 // Constants for sound effects we play in the game
 #define SFX_HURT 0
@@ -76,7 +76,7 @@
 #define SFX_CHANNEL_4 3
 
 // FIXME: Get correct count
-#define ALL_VACUUMS 3
+#define ALL_VACUUMS 12
 
 #define ATTRIBUTE_TABLE_OFFSET 0x3c0
 #define NAMETABLE_A_ATTRS NAMETABLE_A + ATTRIBUTE_TABLE_OFFSET
