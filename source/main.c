@@ -40,7 +40,7 @@ void initialize_variables() {
     currentWorldId = WORLD_OVERWORLD; // The ID of the world to load.
 
     corruptionLevel = 0;
-    worldNum = 0;
+    worldNum = 5;
     playerVacuumCount = 0;
     
     // Little bit of generic initialization below this point - we need to set
