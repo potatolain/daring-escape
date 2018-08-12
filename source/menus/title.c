@@ -20,15 +20,16 @@ void draw_title_screen() {
 	oam_clear();
 
     
-    put_str(NTADR_A(7, 5), gameName);
+    put_str(NTADR_A(10, 4), gameName);
+	put_str(NTADR_A(5, 7), gameSub);
 	
-	put_str(NTADR_A(2, 26), gameAuthorContact);
+	put_str(NTADR_A(3, 26), gameAuthorContact);
 	
 	put_str(NTADR_A(2, 28), "Copyright");
 	put_str(NTADR_A(12, 28), currentYear);
 	put_str(NTADR_A(17, 28), gameAuthor);
 
-	put_str(NTADR_A(10, 16), "Press Start!");
+	put_str(NTADR_A(10, 17), "Press Start");
 	ppu_on_all();
 
 	gameState = GAME_STATE_TITLE_INPUT;
