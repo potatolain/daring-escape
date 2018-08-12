@@ -57,6 +57,7 @@ void clear_screen_buffer() {
 void main() {
     fade_out_instant();
     gameState = GAME_STATE_SYSTEM_INIT;
+    // gameState = GAME_STATE_CREDITS;
 
     while (1) {
         everyOtherCycle = !everyOtherCycle;

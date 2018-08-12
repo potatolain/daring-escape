@@ -60,14 +60,20 @@
 #define SFX_GAMEOVER 4
 #define SFX_WIN 5
 
-// FIXME
-#define SFX_VACUUM 3
+#define SFX_DOOR 6
+// FIXME: IF we add this sound, implement
+#define SFX_NPC_TALK 7
+
+#define SFX_VACUUM 8
 
 // Constants for sfx channels. Completely unnecessary but it's easier to read
 #define SFX_CHANNEL_1 0
 #define SFX_CHANNEL_2 1
 #define SFX_CHANNEL_3 2
 #define SFX_CHANNEL_4 3
+
+// FIXME: Get correct count
+#define ALL_VACUUMS 3
 
 #define ATTRIBUTE_TABLE_OFFSET 0x3c0
 #define NAMETABLE_A_ATTRS NAMETABLE_A + ATTRIBUTE_TABLE_OFFSET

@@ -459,6 +459,7 @@ void handle_player_sprite_collision() {
                 // Doors without locks are very simple - they just open! Hide the sprite until the user comes back...
                 // note that we intentionally *don't* store this state, so it comes back next time.
                 currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
+                sfx_play(SFX_DOOR, SFX_CHANNEL_4);
                 break;
             case SPRITE_TYPE_LOCKED_DOOR:
                 // First off, do you have a key? If so, let's just make this go away...
@@ -468,6 +469,7 @@ void handle_player_sprite_collision() {
 
                     // Mark the door as gone, so it doesn't come back.
                     currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[lastPlayerSpriteCollisionId];
+                    sfx_play(SFX_DOOR, SFX_CHANNEL_4);
 
                     break;
                 }
@@ -499,6 +501,8 @@ void handle_player_sprite_collision() {
                 ++worldNum;
                 trigger_game_text(leveCompleteText);
                 gameState = GAME_STATE_LEVEL_COMPLETE;
+                music_pause(1);
+                sfx_play(SFX_WIN, SFX_CHANNEL_1);
                 break;
             case SPRITE_TYPE_NPC:
                 // Okay, we collided with this NPC before we calculated the player's movement. After being moved, does the 
