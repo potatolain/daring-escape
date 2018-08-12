@@ -111,7 +111,7 @@ void main() {
                 ppu_on_all();
 
                 // Map drawing is complete; let the player play the game!
-                music_play(SONG_OVERWORLD);
+                music_play(SONG_OVERWORLD_1);
                 fade_in();
                 gameState = GAME_STATE_RUNNING;
 
