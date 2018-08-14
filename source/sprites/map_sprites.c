@@ -239,9 +239,19 @@ void update_map_sprites() {
         sprY8 = sprY >> SPRITE_POSITION_SHIFT;
 
         if ((sprX8 >> 4)+1 < corruptionLocation) {
+            // Don't permanently remove key items, namely keys, locked doors, and the exit doors!)
+            if (
+                currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] == SPRITE_TYPE_HEALTH || 
+                currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] == SPRITE_TYPE_REGULAR_ENEMY ||
+                currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] == SPRITE_TYPE_HEALTH || 
+                currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] == SPRITE_TYPE_DOOR || 
+                currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] == SPRITE_TYPE_NPC
+            ) {
+                currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[i];
+            }
+
             // baiiiiii
             currentMapSpriteData[(currentMapSpriteIndex) + MAP_SPRITE_DATA_POS_TYPE] = SPRITE_TYPE_OFFSCREEN;
-            currentMapSpritePersistance[playerOverworldPosition] |= bitToByte[i];
             sfx_play(SFX_EXPLODE, SFX_CHANNEL_4);
 
         }
