@@ -39,14 +39,7 @@ ZEROPAGE_DEF(unsigned char, playerDirection);
 #define collisionTempYInt tempInt4
 
  const unsigned char* introductionText = 
-                                "Welcome to nes-starter-kit! I " 
-                                ;/*
-                                "am an NPC.                    "
-                                "                              "
-
-                                "Hope you're having fun!       "
-                                "                              "
-                                "- Chris";*/
+                                "Welcome to nes-starter-kit!";
 const unsigned char* introCharacter = 
                                 "Hello! How are you?           "
                                 "                              "

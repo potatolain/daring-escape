@@ -136,10 +136,7 @@ void draw_credits_screen() {
     put_str(NTADR_A(11, 21),        "you do?");
     // put_str(NTADR_A(4, 21), "- Mesen");
 
-    // put_str(NTADR_A(2, 24), "Check it out:");
-    // put_str(NTADR_A(2, 24), "cppchriscpp.github.io/");
-    // put_str(NTADR_A(2, 25), "nes-starter-kit");
-    put_str(NTADR_A(1, 26), "https://tinyurl.com/nes-start");
+    put_str(NTADR_A(1, 26), "https://nes-starter-kit.nes.science");
 
 
     // Hide all existing sprites

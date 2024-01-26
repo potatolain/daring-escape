@@ -6,7 +6,7 @@ Theme: Running out of nes-starter-kit.
 
 This is heavily based off of **nes-starter-kit**. I did a lot of hacky things here; if you want a good starting place definitely check that out.
 
-**[nes-starter-kit](https://cppchriscpp.github.io/nes-starter-kit)**
+**[nes-starter-kit](https://nes-starter-kit.nes.science)**
 
 
 [ROM Download](https://s3.amazonaws.com/ld42-space/master/ld42_space.latest.nes)
@@ -26,5 +26,5 @@ well documented as well, so I have a hard time seeing a reason to really write m
 
 If this really takes off or something I'll certainly clean this up a bit. 
 
-Feel free to contact me over email (see my Github user profile) or [Twitter](https://twitter.com/cppchriscpp) with any questions 
+Feel free to contact me over email (see my Github user profile) or open an issue with any questions 
 about this game.
